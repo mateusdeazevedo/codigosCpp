@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1744568401 source:c:\users\mateu\onedrive\documentos\programação\trabalho transporte prog\main.cpp
+	<iostream>
+	<ctime>
+	<iomanip>
+
