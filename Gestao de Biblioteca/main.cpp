@@ -37,7 +37,7 @@ public:
     {
         return ano;
     }
-    void mostrarInfor(string titulo, int ano)
+    void mostrarInfo()
     {
         cout << "Titulo: " << titulo << ". Ano: " << ano << endl;
     }
@@ -49,10 +49,8 @@ private:
     string autor;
 
 public:
-    Livro()
+    Livro() : Item()
     {
-        titulo = "";
-        ano = 0;
         autor = "";
     }
     Livro(string titulo, int ano, string autor)
@@ -69,7 +67,7 @@ public:
     {
         return autor;
     }
-    void mostrarInfor(string titulo, int ano, string autor)
+    void mostrarInfo()
     {
         cout << "Titulo: " << titulo << ". Ano: " << ano << ". Autor: " << autor << endl;
     }
@@ -81,10 +79,8 @@ private:
     int numeroEdicao;
 
 public:
-    Revista()
+    Revista() : Item()
     {
-        titulo = "";
-        ano = 0;
         numeroEdicao = 0;
     }
     Revista(string titulo, int ano, int numeroEdicao)
@@ -101,7 +97,7 @@ public:
     {
         return numeroEdicao;
     }
-    void mostrarInfor(string titulo, int ano, int numeroEdicao)
+    void mostrarInfo()
     {
         cout << "Titulo: " << titulo << ". Ano: " << ano << ". Numero da Edicao: " << numeroEdicao << endl;
     }
@@ -153,37 +149,124 @@ public:
     }
     void listarTodos()
     {
+        if (qtdLivros == 0 && qtdRevistas == 0)
+        {
+            cout << "Acervo vazio." << endl;
+        }
         for (int i = 0; i < qtdLivros; i++)
         {
-            livros[i].mostrarInfor(livros[i].getTitulo(), livros[i].getAno(), livros[i].getAutor());
+            livros[i].mostrarInfo();
         }
         for (int i = 0; i < qtdRevistas; i++)
         {
-            revistas[i].mostrarInfor(revistas[i].getTitulo(), revistas[i].getAno(), revistas[i].getNumeroEdicao());
+            revistas[i].mostrarInfo();
         }
     }
     void buscarPorTitulo(string titulo)
     {
-        for (int i = 0; i < MAX_ITENS; i++)
+        bool encontrou = false;
+        for (int i = 0; i < qtdLivros; i++)
         {
             if (titulo == livros[i].getTitulo())
             {
-                cout << "Livro encontrado. Exibindo informacoes:" << endl;
-                livros[i].mostrarInfor(livros[i].getTitulo(), livros[i].getAno(), livros[i].getAutor());
+                cout << "Livro encontrado! Exibindo informacoes:" << endl;
+                livros[i].mostrarInfo();
+                encontrou = true;
                 break;
             }
+        }
+        for (int i = 0; i < qtdRevistas; i++)
+        {
             if (titulo == revistas[i].getTitulo())
             {
-                cout << "Revista encontrada. Exibindo informacoes:" << endl;
-                revistas[i].mostrarInfor(revistas[i].getTitulo(), revistas[i].getAno(), revistas[i].getNumeroEdicao());
+                cout << "Revista encontrada! Exibindo informacoes:" << endl;
+                revistas[i].mostrarInfo();
+                encontrou = true;
                 break;
             }
+        }
+        if(!encontrou)
+        {
+        cout << "Item nao encontrado no acervo." << endl;
         }
     }
 };
 
 int main()
 {
+    int opcao;
+    string titulo, autor;
+    int ano, numeroEdicao;
+    Biblioteca biblioteca;
+
+    // Repetidor do menu principal
+    do
+    {
+        // Menu principal
+        do
+        {
+            system("cls");
+            cout << "Bem vindo a biblioteca do Mateus!" << endl;
+            cout << "Digite o que voce quer fazer:" << endl
+                 << "1. Adicionar livro" << endl
+                 << "2. Adicionar revista" << endl
+                 << "3. Listar acervo" << endl
+                 << "4. Buscar por titulo" << endl
+                 << "5. Sair" << endl
+                 << "Opcao: ";
+            cin >> opcao;
+            if (opcao < 1 || opcao > 5)
+            {
+                cout << "Opcao invalida!" << endl;
+            }
+        } while (opcao < 1 || opcao > 5);
+
+        system("cls");
+        cin.ignore(); // Limpa o buffer do teclado antes de usar getline
+
+        switch (opcao)
+        {
+        case 1:
+            cout << "Cadastro de livros:" << endl;
+            cout << "Insira o titulo do livro: ";
+            getline(cin, titulo);
+            cout << "Insira o ano de lancamento do livro: ";
+            cin >> ano;
+            cin.ignore(); // Limpa o buffer antes de ler o autor
+            cout << "Insira o nome do autor do livro: ";
+            getline(cin, autor);
+            biblioteca.adicionarLivros(titulo, ano, autor);
+            break;
+        case 2:
+            cout << "Cadastro de revistas: " << endl;
+            cout << "Insira o titulo da revista: ";
+            getline(cin, titulo);
+            cout << "Insira o ano de lancamento da revista: ";
+            cin >> ano;
+            cin.ignore();
+            cout << "Insira o numero da edicao da revista: ";
+            cin >> numeroEdicao;
+            biblioteca.adicionarRevista(titulo, ano, numeroEdicao);
+            break;
+        case 3:
+            cout << "Listando acervo:" << endl;
+            biblioteca.listarTodos();
+            cout << "Aperte qualquer tecla para continuar: ";
+            cin.get();
+            break;
+        case 4:
+            cout << "Busca por titulo:" << endl;
+            cout << "Insira o titulo do livro/revista que deseja encontrar: ";
+            getline(cin, titulo);
+            biblioteca.buscarPorTitulo(titulo);
+            cout << "Aperte qualquer tecla para continuar: ";
+            cin.get();
+            break;
+        default:
+            cout << "Saindo do programa..." << endl;
+            break;
+        }
+    } while (opcao != 5);
 
     return 0;
 }
