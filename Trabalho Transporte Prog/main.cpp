@@ -1,4 +1,4 @@
-// G1 - Mateus de Azevedo, Samara da Silva e João Vitor
+// G1 - Mateus de Azevedo, Samara da Silva e JoÃ£o Vitor
 #include <iostream>
 #include <ctime>
 #include <iomanip>
@@ -69,7 +69,7 @@ public:
     if (escolha >= 1 && escolha <= 3) {
         estiloPilotagem = escolha;
     } else {
-        cout << "Opção invalida. Tente novamente." << endl;
+        cout << "Opï¿½ï¿½o invalida. Tente novamente." << endl;
     }
     } while (escolha < 1 || escolha > 3);
     }
@@ -201,7 +201,7 @@ public:
     cin >> escolha;
 
     if (escolha < 1 || escolha > 10) {
-    cout << "Opção invalida. Escolha novamente." << endl;
+    cout << "Opï¿½ï¿½o invalida. Escolha novamente." << endl;
     }
     } while (escolha < 1 || escolha > 10);
 
@@ -239,7 +239,7 @@ public:
 
 };
 
-    //Uso de alocação dinâmica
+    //Uso de alocaï¿½ï¿½o dinï¿½mica
     Passageiro* passageiro;
     Carro* carro;
 
