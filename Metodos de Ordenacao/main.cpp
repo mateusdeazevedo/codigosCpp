@@ -120,7 +120,7 @@ int main()
 {
     srand(time(NULL));
     int vet[TAM];
-    int vet1[TAM], vet2[TAM], vet3[TAM];
+    int copia[TAM];
     int qtdComp, qtdTroca;
     int mediasTrocas[3] = {0};
     int mediasComps[3] = {0};
@@ -130,29 +130,29 @@ int main()
     {
 
         gerarVetor(vet);
-        copiarVetor(vet, vet1);
-        copiarVetor(vet, vet2);
-        copiarVetor(vet, vet3);
+        copiarVetor(vet, copia);
 
         exibirVetor(vet);
 
         qtdComp = 0, qtdTroca = 0;
-        bolhaMelhorado(vet1, &qtdComp, &qtdTroca);
+        bolhaMelhorado(copia, &qtdComp, &qtdTroca);
         mediasTrocas[0] += qtdTroca;
         mediasComps[0] += qtdComp;
-        exibirVetorOrdenado(vet1, i, metodo[0]);
+        exibirVetorOrdenado(copia, i, metodo[0]);
 
+        copiarVetor(vet, copia);
         qtdComp = 0, qtdTroca = 0;
-        insertion(vet2, &qtdComp, &qtdTroca);
+        insertion(copia, &qtdComp, &qtdTroca);
         mediasTrocas[1] += qtdTroca;
         mediasComps[1] += qtdComp;
-        exibirVetorOrdenado(vet2, i, metodo[1]);
+        exibirVetorOrdenado(copia, i, metodo[1]);
 
+        copiarVetor(vet, copia);
         qtdComp = 0, qtdTroca = 0;
-        selecao(vet3, &qtdComp, &qtdTroca);
+        selecao(copia, &qtdComp, &qtdTroca);
         mediasTrocas[2] += qtdTroca;
         mediasComps[2] += qtdComp;
-        exibirVetorOrdenado(vet3, i, metodo[2]);
+        exibirVetorOrdenado(copia, i, metodo[2]);
 
         cout << "---------------------------" << endl;
 
