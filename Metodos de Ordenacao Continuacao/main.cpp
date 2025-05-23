@@ -18,7 +18,7 @@ void exibirVetor(int vetor[], int tam)
     {
         cout << vetor[i] << " ";
     }
-    cout << "." << endl;
+    cout << endl;
 }
 
 void exibirVetorOrdenado(int vetor[], int tam, int *qtdTroca, int *qtdComp)
@@ -28,7 +28,7 @@ void exibirVetorOrdenado(int vetor[], int tam, int *qtdTroca, int *qtdComp)
     {
         cout << vetor[i] << " ";
     }
-    cout << "." << endl;
+    cout << endl;
 
     cout << "Quantidade de trocas: " << *qtdTroca << endl;
     cout << "Quantidade de comparacoes: " << *qtdComp << endl;
@@ -111,8 +111,20 @@ void selecao(int vetor[], int *qtdComp, int *qtdTroca, int tam)
     }
 }
 
+void limparTela()
+{
+#ifdef _WIN32
+    system("cls"); // Windows
+#elif __linux__
+    system("clear"); // Linux
+#else
+    cout << "Sistema não suportado para limpar a tela.\n";
+#endif
+}
+
 int main()
 {
+    // Criação das variáveis que serão utilizadas no programa
     int *vet = NULL, *copia = NULL, tam, ini, fim, opcao, qtdComp, qtdTroca;
     char opcao2;
     srand(time(NULL));
@@ -123,17 +135,18 @@ int main()
         cout << "Bem vindo! O que deseja fazer?" << endl
              << "1 - Gerar vetor" << endl
              << "2 - Ordenacoes" << endl
-             << "3 - Finalizar" << endl;
+             << "3 - Finalizar" << endl
+             << "Opcao: ";
         cin >> opcao;
 
-        system("clear");
+        limparTela();
 
         switch (opcao)
         {
         case 1:
             // Opção 1
             cout << "1 - Gerar vetor" << endl;
-            cout << "Informe o tamanho: ";
+            cout << "Informe o tamanho do vetor: ";
             cin >> tam;
             cout << "Intervalo: ";
             cin >> ini >> fim;
@@ -144,11 +157,10 @@ int main()
             break;
         case 2:
             // Opção 2
-            /*De acordo com a opção escolhida pelo usuário, apresentar o vetor ordenado, e as quantidades de trocas
-            e comparações realizadas, e retornar ao menu principal.*/
-            copia = new int[tam];
             if (vet != NULL)
             {
+                copia = new int[tam];
+                // Se o vetor foi criado
                 cout << "Qual ordenacoes voce deseja usar?" << endl
                      << "a) Apenas Bolha Melhorado" << endl
                      << "b) Apenas Insercao" << endl
@@ -156,79 +168,86 @@ int main()
                      << "d) Bolha Melhorado e Insercao" << endl
                      << "e) Bolha Melhorado e Selecao" << endl
                      << "f) Insercao e Selecao" << endl
-                     << "g) Todos os metodos" << endl;
+                     << "g) Todos os metodos" << endl
+                     << "Opcao: " << endl;
                 cin >> opcao2;
 
                 switch (opcao2)
                 {
                 case 'a':
-                    system("clear");
+                    limparTela();
                     cout << "a) Apenas Bolha melhorado" << endl;
-                    qtdComp = 0, qtdTroca = 0;
+                    qtdComp = qtdTroca = 0;
                     copiarVetor(vet, copia, tam);
                     bolhaMelhorado(copia, &qtdComp, &qtdTroca, tam);
                     exibirVetorOrdenado(copia, tam, &qtdTroca, &qtdComp);
                     cout << "-------------------------" << endl;
                     break;
                 case 'b':
-                    system("clear");
+                    limparTela();
                     cout << "b) Apenas insercao" << endl;
-                    qtdComp = 0, qtdTroca = 0;
+                    qtdComp = qtdTroca = 0;
                     copiarVetor(vet, copia, tam);
                     insertion(copia, &qtdComp, &qtdTroca, tam);
                     exibirVetorOrdenado(copia, tam, &qtdTroca, &qtdComp);
                     cout << "-------------------------" << endl;
                     break;
                 case 'c':
-                    system("clear");
+                    limparTela();
                     cout << "c) Apenas selecao" << endl;
-                    qtdComp = 0, qtdTroca = 0;
+                    qtdComp = qtdTroca = 0;
                     copiarVetor(vet, copia, tam);
                     selecao(copia, &qtdComp, &qtdTroca, tam);
                     exibirVetorOrdenado(copia, tam, &qtdTroca, &qtdComp);
                     cout << "-------------------------" << endl;
                     break;
                 case 'd':
-                    system("clear");
+                    limparTela();
                     cout << "d) Bolha Melhorado e Insercao" << endl;
-                    qtdComp = 0, qtdTroca = 0;
+                    cout << "Bolha melhorado:" << endl;
+                    qtdComp = qtdTroca = 0;
                     copiarVetor(vet, copia, tam);
                     bolhaMelhorado(copia, &qtdComp, &qtdTroca, tam);
-                    cout << "Bolha melhorado:" << endl;
                     exibirVetorOrdenado(copia, tam, &qtdTroca, &qtdComp);
+
                     cout << endl;
+
                     cout << "Insercao:" << endl;
-                    qtdComp = 0, qtdTroca = 0;
+                    qtdComp = qtdTroca = 0;
                     copiarVetor(vet, copia, tam);
                     insertion(copia, &qtdComp, &qtdTroca, tam);
                     exibirVetorOrdenado(copia, tam, &qtdTroca, &qtdComp);
                     cout << "-------------------------" << endl;
                     break;
                 case 'e':
-                    system("clear");
+                    limparTela();
                     cout << "e) Bolha Melhorado e Selecao" << endl;
-                    qtdComp = 0, qtdTroca = 0;
+                    cout << "Bolha melhorado:" << endl;
+                    qtdComp = qtdTroca = 0;
                     copiarVetor(vet, copia, tam);
                     bolhaMelhorado(copia, &qtdComp, &qtdTroca, tam);
-                    cout << "Bolha melhorado:" << endl;
                     exibirVetorOrdenado(copia, tam, &qtdTroca, &qtdComp);
+
                     cout << endl;
+
                     cout << "Selecao:" << endl;
-                    qtdComp = 0, qtdTroca = 0;
+                    qtdComp = qtdTroca = 0;
                     copiarVetor(vet, copia, tam);
                     selecao(copia, &qtdComp, &qtdTroca, tam);
                     exibirVetorOrdenado(copia, tam, &qtdTroca, &qtdComp);
                     cout << "-------------------------" << endl;
                     break;
                 case 'f':
-                    system("clear");
+                    limparTela();
                     cout << "f) Insercao e Selecao" << endl;
                     cout << "Insercao:" << endl;
-                    qtdComp = 0, qtdTroca = 0;
+                    qtdComp = qtdTroca = 0;
                     copiarVetor(vet, copia, tam);
                     insertion(copia, &qtdComp, &qtdTroca, tam);
                     exibirVetorOrdenado(copia, tam, &qtdTroca, &qtdComp);
+
                     cout << endl;
+
                     cout << "Selecao:" << endl;
                     qtdComp = 0, qtdTroca = 0;
                     copiarVetor(vet, copia, tam);
@@ -237,41 +256,47 @@ int main()
                     cout << "-------------------------" << endl;
                     break;
                 case 'g':
-                    system("clear");
+                    limparTela();
                     cout << "g) Todos os metodos" << endl;
                     cout << "Bolha melhorado:" << endl;
-                    qtdComp = 0, qtdTroca = 0;
+                    qtdComp = qtdTroca = 0;
                     copiarVetor(vet, copia, tam);
                     bolhaMelhorado(copia, &qtdComp, &qtdTroca, tam);
                     exibirVetorOrdenado(copia, tam, &qtdTroca, &qtdComp);
+
                     cout << endl;
+
                     cout << "Insercao:" << endl;
-                    qtdComp = 0, qtdTroca = 0;
+                    qtdComp = qtdTroca = 0;
                     copiarVetor(vet, copia, tam);
                     insertion(copia, &qtdComp, &qtdTroca, tam);
                     exibirVetorOrdenado(copia, tam, &qtdTroca, &qtdComp);
+
                     cout << endl;
+
                     cout << "Selecao:" << endl;
-                    qtdComp = 0, qtdTroca = 0;
+                    qtdComp = qtdTroca = 0;
                     copiarVetor(vet, copia, tam);
                     selecao(copia, &qtdComp, &qtdTroca, tam);
                     exibirVetorOrdenado(copia, tam, &qtdTroca, &qtdComp);
                     cout << "-------------------------" << endl;
                     break;
                 default:
-                    system("clear");
+                    limparTela();
                     cout << "Opcao invalida." << endl;
                 }
             }
             else
             {
+                // Se o vetor ainda não foi criado
                 cout << "Primeiro gere o vetor!" << endl;
             }
             break;
         case 3:
             // Opção 3
-            delete (vet);
-            delete (copia);
+            cout << "Encerrando programa..." << endl;
+            delete[] vet;
+            delete[] copia;
             break;
         default:
             cout << "Opcao invalida." << endl;
