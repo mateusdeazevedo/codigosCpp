@@ -263,11 +263,15 @@ int main()
                     cout << "Opcao invalida." << endl;
                 }
             }
+            else
+            {
+                cout << "Primeiro gere o vetor!" << endl;
+            }
             break;
         case 3:
             // Opção 3
-            delete(vet);
-            delete(copia);
+            delete (vet);
+            delete (copia);
             break;
         default:
             cout << "Opcao invalida." << endl;
