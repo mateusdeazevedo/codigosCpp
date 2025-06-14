@@ -1,69 +1,10 @@
-#include <iostream>
+#include "pacote.h"
+#include "function.h"
 
 using namespace std;
 
 const int TAM = 100;
 static int pacotesCriados = 0;
-
-class Pacote
-{
-private:
-    string prefixo, sufixo, quemRecebeu;
-    int codigoNumerico, numAviRec;
-
-public:
-    Pacote()
-    {
-        prefixo = sufixo = quemRecebeu = "";
-        codigoNumerico = numAviRec = 0;
-    }
-
-    Pacote(string pre, string suf, string qmRec, int cdgNum, int NAR)
-    {
-        this->prefixo = pre;
-        this->sufixo = suf;
-        this->quemRecebeu = qmRec;
-        this->codigoNumerico = cdgNum;
-        this->numAviRec = NAR;
-    }
-
-    string getCodigo()
-    {
-        return prefixo + to_string(codigoNumerico) + sufixo;
-    }
-
-    void listarPacotes()
-    {
-        cout << "Codigo: " << prefixo << codigoNumerico << sufixo << endl;
-        if (quemRecebeu != "")
-            cout << "Pessoa que recebeu: " << quemRecebeu << endl;
-        if (numAviRec != 0)
-            cout << "Numero de aviso de recebimento: " << endl;
-        cout << "------------------------------" << endl;
-    }
-};
-
-void procurarPacote(Pacote pacotes[], int total, string codigo)
-{
-    bool encontrou = false;
-    for (int i = 0; i < total; i++)
-    {
-        if (codigo == pacotes[i].getCodigo())
-        {
-            cout << "Pacote encontrado! Mostrando as informacoes:" << endl;
-            pacotes[i].listarPacotes();
-            encontrou = true;
-            break;
-        }
-    }
-
-    if (!encontrou)
-        cout << "Pacote nao encontrado." << endl;
-
-    cout << "Pressione Enter para continuar." << endl;
-    cin.ignore();
-    cin.get();
-}
 
 int main()
 {
@@ -80,12 +21,7 @@ int main()
         if (opcaoi != 0)
             system("cls");
 
-        cout << "O que voce deseja fazer?" << endl
-             << "1 - Cadastrar pacote" << endl
-             << "2 - Listar pacotes cadastrados" << endl
-             << "3 - Procurar pacote por codigo" << endl
-             << "4 - Sair" << endl
-             << "Opcao: ";
+        mostrarMenu();
         cin >> opcaoi;
 
         switch (opcaoi)
