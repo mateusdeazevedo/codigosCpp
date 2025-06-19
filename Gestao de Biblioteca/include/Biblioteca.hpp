@@ -24,6 +24,11 @@ public:
     void adicionarRevista(std::string titulo, int ano, int edicao);
     void listarTodos();
     void buscarPorTitulo(std::string titulo);
+    void buscaPorIntervaloTempo(int anoIni, int anoFim);
+    void ordenarAno();
+    void ordenarTitulo();
+    void totalItens();
+    void mediaAnoItens();
 };
 
 #endif

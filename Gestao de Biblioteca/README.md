@@ -1,6 +1,6 @@
 # 📚 Projeto Biblioteca Completa
 
-Bem-vindo ao sistema de gerenciamento de acervo de uma biblioteca! Este projeto é um exercício de programação orientada a objetos em C++, com foco em herança, polimorfismo, modularização e manipulação de arquivos, **sem o uso de `vector`**.
+Bem-vindo ao sistema de gerenciamento de acervo de uma biblioteca! Este projeto é um exercício de programação orientada a objetos em C++, com foco em herança, polimorfismo, modularização e manipulação de arquivos.
 
 ---
 
@@ -22,15 +22,15 @@ O sistema permite o cadastro e gerenciamento de **livros** e **revistas**, utili
 ### 📌 Busca
 - [x] Buscar item por título exato.
 - [ ] Buscar por trecho do título.
-- [ ] Listar itens por intervalo de ano.
+- [x] Listar itens por intervalo de ano.
 
 ### 📌 Ordenação
-- [ ] Ordenar acervo por título (A-Z).
-- [ ] Ordenar acervo por ano (mais antigo → mais recente).
+- [x] Ordenar acervo por título (A-Z).
+- [x] Ordenar acervo por ano (mais antigo → mais recente).
 
 ### 📌 Estatísticas
-- [ ] Contar total de livros e revistas.
-- [ ] Calcular média dos anos de publicação.
+- [x] Contar total de livros e revistas.
+- [x] Calcular média dos anos de publicação.
 
 ### 📌 Arquivos
 - [ ] Salvar acervo em arquivo `.txt`.
