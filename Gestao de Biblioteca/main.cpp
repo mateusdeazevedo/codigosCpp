@@ -94,8 +94,8 @@ int main()
             if (opcao < 1 || opcao > 7)
             {
                 cout << "Opcao invalida!" << endl;
-                cout << "Aperte qualquer tecla para continuar: ";
                 cin.ignore();
+                cout << "Aperte qualquer tecla para continuar: ";
                 cin.get();
             }
         } while (opcao < 1 || opcao > 7);
@@ -116,35 +116,57 @@ int main()
                     cout << "Opcao invalida!" << endl;
                 }
             } while (opcao2 < 1 || opcao2 > 2);
+
             if (opcao2 == 1)
             {
-                cout << "Insira o titulo do livro: ";
-                getline(cin, titulo);
-                cout << "Insira o ano de lancamento do livro: ";
-                cin >> ano;
-                cin.ignore();
-                cout << "Insira o nome do autor do livro: ";
-                getline(cin, autor);
-                biblioteca.adicionarLivros(titulo, ano, autor);
+                do
+                {
+                    cout << "Insira o titulo do livro: ";
+                    cin.ignore();
+                    getline(cin, titulo);
+                    cout << "Insira o ano de lancamento do livro: ";
+                    cin >> ano;
+                    cout << "Insira o nome do autor do livro: ";
+                    cin.ignore();
+                    getline(cin, autor);
+                    if (titulo.empty() || autor.empty() || ano <= 0)
+                    {
+                        cout << "Dados invalidos para o livro.\n";
+                    }
+                    else
+                    {
+                        biblioteca.adicionarLivros(titulo, ano, autor);
+                    }
+                } while (titulo.empty() || autor.empty() || ano <= 0);
             }
             else if (opcao2 == 2)
             {
-                cout << "Cadastro de revistas: " << endl;
-                cout << "Insira o titulo da revista: ";
-                getline(cin, titulo);
-                cout << "Insira o ano de lancamento da revista: ";
-                cin >> ano;
-                cin.ignore();
-                cout << "Insira o numero da edicao da revista: ";
-                cin >> numeroEdicao;
-                biblioteca.adicionarRevista(titulo, ano, numeroEdicao);
+                do
+                {
+                    cout << "Cadastro de revistas: " << endl;
+                    cout << "Insira o titulo da revista: ";
+                    cin.ignore();
+                    getline(cin, titulo);
+                    cout << "Insira o ano de lancamento da revista: ";
+                    cin >> ano;
+                    cout << "Insira o numero da edicao da revista: ";
+                    cin >> numeroEdicao;
+                    if (titulo.empty() || ano <= 0 || numeroEdicao <= 0)
+                    {
+                        cout << "Dados invalidos para a revista.\n";
+                    }
+                    else
+                    {
+                        biblioteca.adicionarRevista(titulo, ano, numeroEdicao);
+                    }
+                } while (titulo.empty() || ano <= 0 || numeroEdicao <= 0);
             }
             break;
         case 2:
             cout << "Listando acervo:" << endl;
             biblioteca.listarTodos();
-            cout << "Aperte qualquer tecla para continuar: ";
             cin.ignore();
+            cout << "Aperte qualquer tecla para continuar: ";
             cin.get();
             break;
         case 3:
@@ -158,41 +180,72 @@ int main()
                     cout << "Opcao invalida!" << endl;
                 }
             } while (opcao2 < 1 || opcao2 > 3);
+
             if (opcao2 == 1)
             {
-                limparTela();
-                cin.ignore();
-                cout << "Busca por titulo exato:" << endl;
-                cout << "Insira o titulo do item que voce quer encontrar: ";
-                getline(cin, titulo);
-                biblioteca.buscarPorTitulo(titulo);
-                cout << "Aperte qualquer tecla para continuar: ";
-                cin.ignore();
-                cin.get();
+                do
+                {
+                    limparTela();
+                    cin.ignore();
+                    cout << "Busca por titulo exato:" << endl;
+                    cout << "Insira o titulo do item que voce quer encontrar: ";
+                    getline(cin, titulo);
+                    if (titulo.empty())
+                    {
+                        cout << "Titulo invalido!" << endl;
+                    }
+                    else
+                    {
+                        biblioteca.buscarPorTitulo(titulo);
+                    }
+                    cin.ignore();
+                    cout << "Aperte qualquer tecla para continuar: ";
+                    cin.get();
+                } while (titulo.empty());
             }
             else if (opcao2 == 2)
             {
-                limparTela();
-                cin.ignore();
-                cout << "Busca por trecho do titulo:" << endl;
-                cout << "Insira um trecho do titulo do item que voce quer encontrar: ";
-                getline(cin, titulo);
-                biblioteca.buscaTrechoTitulo(titulo);
-                cout << "Aperte qualquer tecla para continuar: ";
-                cin.ignore();
-                cin.get();
+                do
+                {
+                    limparTela();
+                    cin.ignore();
+                    cout << "Busca por trecho do titulo:" << endl;
+                    cout << "Insira um trecho do titulo do item que voce quer encontrar: ";
+                    getline(cin, titulo);
+                    if (titulo.empty())
+                    {
+                        cout << "Titulo invalido!" << endl;
+                    }
+                    else
+                    {
+                        biblioteca.buscaTrechoTitulo(titulo);
+                    }
+                    cin.ignore();
+                    cout << "Aperte qualquer tecla para continuar: ";
+                    cin.get();
+                } while (titulo.empty());
             }
             else
             {
-                cout << "Buscar por intervalo de ano:" << endl;
-                cout << "Insira o comeco e o final do intervalo de tempo, respectivamente: ";
-                cin >> anoIni >> anoFim;
-                if (anoIni > anoFim)
-                    std::swap(anoIni, anoFim);
-                biblioteca.buscaPorIntervaloTempo(anoIni, anoFim);
-                cout << "Aperte qualquer tecla para continuar: ";
-                cin.ignore();
-                cin.get();
+                do
+                {
+                    cout << "Buscar por intervalo de ano:" << endl;
+                    cout << "Insira o comeco e o final do intervalo de tempo, respectivamente: ";
+                    cin >> anoIni >> anoFim;
+                    if (anoIni <= 0 || anoFim <= 0)
+                    {
+                        cout << "Intervalo inválido!" << endl;
+                    }
+                    else
+                    {
+                        if (anoIni > anoFim)
+                            std::swap(anoIni, anoFim);
+                        biblioteca.buscaPorIntervaloTempo(anoIni, anoFim);
+                        cin.ignore();
+                        cout << "Aperte qualquer tecla para continuar: ";
+                        cin.get();
+                    }
+                } while (anoIni <= 0 || anoFim <= 0);
             }
             break;
         case 4:
@@ -206,20 +259,21 @@ int main()
                     cout << "Opcao invalida!" << endl;
                 }
             } while (opcao2 < 1 || opcao2 > 2);
+
             if (opcao2 == 1)
             {
                 biblioteca.ordenarTitulo();
                 cout << "Acervo organizado com sucesso!" << endl;
-                cout << "Aperte qualquer tecla para continuar: ";
                 cin.ignore();
+                cout << "Aperte qualquer tecla para continuar: ";
                 cin.get();
             }
             else
             {
                 biblioteca.ordenarAno();
                 cout << "Acervo organizado com sucesso!" << endl;
-                cout << "Aperte qualquer tecla para continuar: ";
                 cin.ignore();
+                cout << "Aperte qualquer tecla para continuar: ";
                 cin.get();
             }
             break;
@@ -234,18 +288,19 @@ int main()
                     cout << "Opcao invalida!" << endl;
                 }
             } while (opcao2 < 1 || opcao2 > 2);
+
             if (opcao2 == 1)
             {
                 biblioteca.totalItens();
-                cout << "Aperte qualquer tecla para continuar: ";
                 cin.ignore();
+                cout << "Aperte qualquer tecla para continuar: ";
                 cin.get();
             }
             else
             {
                 biblioteca.mediaAnoItens();
-                cout << "Aperte qualquer tecla para continuar: ";
                 cin.ignore();
+                cout << "Aperte qualquer tecla para continuar: ";
                 cin.get();
             }
             break;
@@ -260,14 +315,39 @@ int main()
                     cout << "Opcao invalida!" << endl;
                 }
             } while (opcao2 < 1 || opcao2 > 2);
+
             if (opcao2 == 1)
             {
                 cin.ignore();
-                cout << "Digite o nome do arquivo em que voce deseja salvar o acervo: ";
+                cout << "Digite o nome do arquivo em que voce deseja salvar o acervo (sem acentos): ";
                 getline(cin, nomeArquivo);
+                // Verifica se o nome contém acentos
+                bool temAcento = false;
+                for (char c : nomeArquivo)
+                {
+                    // Caracteres acentuados em UTF-8 começam com byte negativo
+                    if (static_cast<unsigned char>(c) > 127)
+                    {
+                        temAcento = true;
+                        break;
+                    }
+                }
+                while (temAcento || nomeArquivo.empty())
+                {
+                    cout << "Nome invalido! Nao use acentos. Digite novamente: ";
+                    getline(cin, nomeArquivo);
+                    temAcento = false;
+                    for (char c : nomeArquivo)
+                    {
+                        if (static_cast<unsigned char>(c) > 127)
+                        {
+                            temAcento = true;
+                            break;
+                        }
+                    }
+                }
                 biblioteca.salvarAcervo(nomeArquivo);
                 cout << "Aperte qualquer tecla para continuar: ";
-                cin.ignore();
                 cin.get();
             }
             else
@@ -275,9 +355,33 @@ int main()
                 cin.ignore();
                 cout << "Digite o nome do arquivo de qual voce quer carregar o acervo: ";
                 getline(cin, nomeArquivo);
+                // Verifica se o nome contém acentos
+                bool temAcento = false;
+                for (char c : nomeArquivo)
+                {
+                    // Caracteres acentuados em UTF-8 começam com byte negativo
+                    if (static_cast<unsigned char>(c) > 127)
+                    {
+                        temAcento = true;
+                        break;
+                    }
+                }
+                while (temAcento || nomeArquivo.empty())
+                {
+                    cout << "Nome invalido! Nao use acentos. Digite novamente: ";
+                    getline(cin, nomeArquivo);
+                    temAcento = false;
+                    for (char c : nomeArquivo)
+                    {
+                        if (static_cast<unsigned char>(c) > 127)
+                        {
+                            temAcento = true;
+                            break;
+                        }
+                    }
+                }
                 biblioteca.carregarAcervo(nomeArquivo);
                 cout << "Aperte qualquer tecla para continuar: ";
-                cin.ignore();
                 cin.get();
             }
             break;
@@ -292,3 +396,5 @@ int main()
 
     return 0;
 }
+
+//400
