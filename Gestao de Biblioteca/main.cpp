@@ -1,5 +1,6 @@
 #include "Biblioteca.hpp"
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -79,8 +80,8 @@ void menuArquivos()
 
 int main()
 {
-    int opcao;
-    string titulo, autor;
+    int opcao, opcao2;
+    string titulo, autor, nomeArquivo;
     int ano, numeroEdicao, anoIni, anoFim;
     Biblioteca biblioteca;
 
@@ -93,6 +94,9 @@ int main()
             if (opcao < 1 || opcao > 7)
             {
                 cout << "Opcao invalida!" << endl;
+                cout << "Aperte qualquer tecla para continuar: ";
+                cin.ignore();
+                cin.get();
             }
         } while (opcao < 1 || opcao > 7);
 
@@ -102,7 +106,7 @@ int main()
         switch (opcao)
         {
         case 1:
-            int opcao2 = 0;
+            opcao2 = 0;
             do
             {
                 menuCadastro();
@@ -144,7 +148,7 @@ int main()
             cin.get();
             break;
         case 3:
-            int opcao2;
+            opcao2 = 0;
             do
             {
                 menuBusca();
@@ -173,7 +177,7 @@ int main()
                 cout << "Busca por trecho do titulo:" << endl;
                 cout << "Insira um trecho do titulo do item que voce quer encontrar: ";
                 getline(cin, titulo);
-                // Chama a função de procurar por trecho do título
+                biblioteca.buscaTrechoTitulo(titulo);
                 cout << "Aperte qualquer tecla para continuar: ";
                 cin.ignore();
                 cin.get();
@@ -182,9 +186,9 @@ int main()
             {
                 cout << "Buscar por intervalo de ano:" << endl;
                 cout << "Insira o comeco e o final do intervalo de tempo, respectivamente: ";
+                cin >> anoIni >> anoFim;
                 if (anoIni > anoFim)
                     std::swap(anoIni, anoFim);
-                cin >> anoIni >> anoFim;
                 biblioteca.buscaPorIntervaloTempo(anoIni, anoFim);
                 cout << "Aperte qualquer tecla para continuar: ";
                 cin.ignore();
@@ -192,7 +196,7 @@ int main()
             }
             break;
         case 4:
-            int opcao2;
+            opcao2 = 0;
             do
             {
                 menuOrdenacao();
@@ -220,7 +224,7 @@ int main()
             }
             break;
         case 5:
-            int opcao2;
+            opcao2 = 0;
             do
             {
                 menuEstatisticas();
@@ -236,7 +240,9 @@ int main()
                 cout << "Aperte qualquer tecla para continuar: ";
                 cin.ignore();
                 cin.get();
-            } else {
+            }
+            else
+            {
                 biblioteca.mediaAnoItens();
                 cout << "Aperte qualquer tecla para continuar: ";
                 cin.ignore();
@@ -244,7 +250,36 @@ int main()
             }
             break;
         case 6:
-            // Arquivos
+            opcao2 = 0;
+            do
+            {
+                menuArquivos();
+                cin >> opcao2;
+                if (opcao2 < 1 || opcao2 > 2)
+                {
+                    cout << "Opcao invalida!" << endl;
+                }
+            } while (opcao2 < 1 || opcao2 > 2);
+            if (opcao2 == 1)
+            {
+                cin.ignore();
+                cout << "Digite o nome do arquivo em que voce deseja salvar o acervo: ";
+                getline(cin, nomeArquivo);
+                biblioteca.salvarAcervo(nomeArquivo);
+                cout << "Aperte qualquer tecla para continuar: ";
+                cin.ignore();
+                cin.get();
+            }
+            else
+            {
+                cin.ignore();
+                cout << "Digite o nome do arquivo de qual voce quer carregar o acervo: ";
+                getline(cin, nomeArquivo);
+                biblioteca.carregarAcervo(nomeArquivo);
+                cout << "Aperte qualquer tecla para continuar: ";
+                cin.ignore();
+                cin.get();
+            }
             break;
         case 7:
             cout << "Encerrando programa..." << endl;

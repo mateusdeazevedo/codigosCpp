@@ -1,5 +1,4 @@
-#ifndef BIBLIOTECA_HPP
-#define BIBLIOTECA_HPP
+#pragma once
 
 #include "Item.hpp"
 #include "Livro.hpp"
@@ -20,15 +19,16 @@ private:
 public:
     Biblioteca();
     Biblioteca(int qtdLivros, int qtdRevistas);
-    void adicionarLivros(std::string titulo, int ano, std::string autor);
-    void adicionarRevista(std::string titulo, int ano, int edicao);
+    void adicionarLivros(const std::string& titulo, int ano, const std::string& autor);
+    void adicionarRevista(const std::string& titulo, int ano, int edicao);
     void listarTodos();
-    void buscarPorTitulo(std::string titulo);
+    void buscarPorTitulo(const std::string& titulo);
     void buscaPorIntervaloTempo(int anoIni, int anoFim);
     void ordenarAno();
     void ordenarTitulo();
     void totalItens();
     void mediaAnoItens();
+    void buscaTrechoTitulo(const std::string& trecho);
+    void salvarAcervo(const std::string& nomeArquivo);
+    void carregarAcervo(const std::string& nomeArquivo);
 };
-
-#endif

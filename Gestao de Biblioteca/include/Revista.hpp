@@ -1,5 +1,4 @@
-#ifndef REVISTA_HPP
-#define REVISTA_HPP
+#pragma once
 
 #include "Item.hpp"
 #include <string>
@@ -16,5 +15,3 @@ public:
     int getNumeroEdicao() const;
     void mostrarInfo() const override;
 };
-
-#endif

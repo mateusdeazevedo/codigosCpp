@@ -1,5 +1,6 @@
 #include "Biblioteca.hpp"
 #include <iostream>
+#include <fstream>
 
 Biblioteca::Biblioteca()
 {
@@ -11,7 +12,7 @@ Biblioteca::Biblioteca(int qtdLivros, int qtdRevistas)
     this->qtdLivros = qtdLivros;
     this->qtdRevistas = qtdRevistas;
 }
-void Biblioteca::adicionarLivros(std::string titulo, int ano, std::string autor)
+void Biblioteca::adicionarLivros(const std::string& titulo, int ano, const std::string& autor)
 {
     if (qtdLivros < 100)
     {
@@ -23,7 +24,7 @@ void Biblioteca::adicionarLivros(std::string titulo, int ano, std::string autor)
         std::cout << "Nao eh possivel adicionar mais livros, biblioteca lotada!\n";
     }
 }
-void Biblioteca::adicionarRevista(std::string titulo, int ano, int edicao)
+void Biblioteca::adicionarRevista(const std::string& titulo, int ano, int edicao)
 {
     if (qtdRevistas < 100)
     {
@@ -50,7 +51,7 @@ void Biblioteca::listarTodos()
         revistas[i].mostrarInfo();
     }
 }
-void Biblioteca::buscarPorTitulo(std::string titulo)
+void Biblioteca::buscarPorTitulo(const std::string& titulo)
 {
     bool encontrou = false;
     for (int i = 0; i < qtdLivros; i++)
@@ -205,6 +206,7 @@ void Biblioteca::totalItens()
     std::cout << "Total de livros cadastrados: " << qtdLivros << std::endl
               << "Total de revistas cadastradas: " << qtdRevistas << std::endl
               << "Quantidade total de itens: " << (qtdLivros + qtdRevistas) << std::endl;
+    std::cout << "---------------------------------------\n";
 }
 
 void Biblioteca::mediaAnoItens()
@@ -216,10 +218,121 @@ void Biblioteca::mediaAnoItens()
     }
     for (int i = 0; i < qtdRevistas; i++)
     {
-        somaLivros += revistas[i].getAno();
+        somaRevistas += revistas[i].getAno();
     }
 
     std::cout << "Media dos anos de publicacao dos livros: " << (somaLivros / qtdLivros) << std::endl
               << "Media dos anos de publicacao das revistas: " << (somaRevistas / qtdRevistas) << std::endl
               << "Media dos anos de publicacao de todos os itens: " << ((somaLivros + somaRevistas) / (qtdLivros + qtdRevistas)) << std::endl;
+    std::cout << "---------------------------------------\n";
+}
+
+void Biblioteca::buscaTrechoTitulo(const std::string& trecho)
+{
+    bool encontrou = false;
+    for (int i = 0; i < qtdLivros; i++)
+    {
+        if (livros[i].getTitulo().find(trecho) != std::string::npos)
+        {
+            livros[i].mostrarInfo();
+            encontrou = true;
+        }
+    }
+    for (int i = 0; i < qtdRevistas; i++)
+    {
+        if (revistas[i].getTitulo().find(trecho) != std::string::npos)
+        {
+            revistas[i].mostrarInfo();
+            encontrou = true;
+        }
+    }
+    if (!encontrou)
+    {
+        std::cout << "Nenhum item encontrado com o trecho informado no título.\n";
+    }
+}
+
+void Biblioteca::salvarAcervo(const std::string& nomeArquivo)
+{
+    std::ofstream arquivo(nomeArquivo + ".txt");
+
+    if (arquivo.is_open())
+    {
+        arquivo << "Livros:\n";
+        for (int i = 0; i < qtdLivros; i++)
+        {
+            arquivo << "Titulo: " << livros[i].getTitulo()
+                    << ", Ano: " << livros[i].getAno()
+                    << ", Autor: " << livros[i].getAutor() << std::endl;
+        }
+        arquivo << "Revistas:\n";
+        for (int i = 0; i < qtdRevistas; i++)
+        {
+            arquivo << "Titulo: " << revistas[i].getTitulo()
+                    << ", Ano: " << revistas[i].getAno()
+                    << ", Numero de edicao: " << revistas[i].getNumeroEdicao() << std::endl;
+        }
+        arquivo.close();
+        std::cout << "Acervo salvo com sucesso!" << std::endl;
+    }
+    else
+    {
+        std::cout << "Erro ao tentar abrir arquivo!" << std::endl;
+    }
+}
+
+void Biblioteca::carregarAcervo(const std::string& nomeArquivo)
+{
+    std::ifstream arquivo(nomeArquivo + ".txt");
+    if (!arquivo.is_open()) {
+        std::cout << "Erro ao abrir o arquivo para leitura!" << std::endl;
+        return;
+    }
+
+    qtdLivros = 0;
+    qtdRevistas = 0;
+    std::string linha;
+    bool lendoLivros = false, lendoRevistas = false;
+
+    while (std::getline(arquivo, linha)) {
+        if (linha == "Livros:") {
+            lendoLivros = true;
+            lendoRevistas = false;
+            continue;
+        }
+        if (linha == "Revistas:") {
+            lendoLivros = false;
+            lendoRevistas = true;
+            continue;
+        }
+        if (linha.empty()) continue;
+
+        if (lendoLivros && qtdLivros < 100) {
+            // Exemplo: Titulo: X, Ano: Y, Autor: Z
+            size_t t1 = linha.find("Titulo: ");
+            size_t t2 = linha.find(", Ano: ");
+            size_t t3 = linha.find(", Autor: ");
+            if (t1 != std::string::npos && t2 != std::string::npos && t3 != std::string::npos) {
+                std::string titulo = linha.substr(t1 + 8, t2 - (t1 + 8));
+                int ano = std::stoi(linha.substr(t2 + 7, t3 - (t2 + 7)));
+                std::string autor = linha.substr(t3 + 9);
+                livros[qtdLivros] = Livro(titulo, ano, autor);
+                qtdLivros++;
+            }
+        } else if (lendoRevistas && qtdRevistas < 100) {
+            // Exemplo: Titulo: X, Ano: Y, Numero de edicao: Z
+            size_t t1 = linha.find("Titulo: ");
+            size_t t2 = linha.find(", Ano: ");
+            size_t t3 = linha.find(", Numero de edicao: ");
+            if (t1 != std::string::npos && t2 != std::string::npos && t3 != std::string::npos) {
+                std::string titulo = linha.substr(t1 + 8, t2 - (t1 + 8));
+                int ano = std::stoi(linha.substr(t2 + 7, t3 - (t2 + 7)));
+                int edicao = std::stoi(linha.substr(t3 + 21));
+                revistas[qtdRevistas] = Revista(titulo, ano, edicao);
+                qtdRevistas++;
+            }
+        }
+    }
+    arquivo.close();
+    std::cout << "Acervo carregado com sucesso!" << std::endl;
 }

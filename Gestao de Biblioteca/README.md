@@ -21,7 +21,7 @@ O sistema permite o cadastro e gerenciamento de **livros** e **revistas**, utili
 
 ### 📌 Busca
 - [x] Buscar item por título exato.
-- [ ] Buscar por trecho do título.
+- [x] Buscar por trecho do título.
 - [x] Listar itens por intervalo de ano.
 
 ### 📌 Ordenação
@@ -33,8 +33,8 @@ O sistema permite o cadastro e gerenciamento de **livros** e **revistas**, utili
 - [x] Calcular média dos anos de publicação.
 
 ### 📌 Arquivos
-- [ ] Salvar acervo em arquivo `.txt`.
-- [ ] Carregar acervo de um arquivo `.txt`.
+- [x] Salvar acervo em arquivo `.txt`.
+- [x] Carregar acervo de um arquivo `.txt`.
 
 ---
 
@@ -72,7 +72,7 @@ Biblioteca/
 
 ## 🚧 Próximas Etapas
 
-- [ ] Implementar ordenações manuais com Bubble Sort ou Selection Sort.
+- [x] Implementar ordenações manuais com Bubble Sort ou Selection Sort.
 - [ ] Refatorar `Biblioteca` para usar `Item**` e permitir um array misto de objetos (`Livro` e `Revista`).
 - [ ] Adicionar validação de entrada e tratamento de erros.
 - [ ] Testar salvamento e carregamento de acervo em arquivo `.txt` com leitura linha a linha.

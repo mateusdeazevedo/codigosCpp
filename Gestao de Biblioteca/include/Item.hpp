@@ -1,5 +1,4 @@
-#ifndef ITEM_HPP
-#define ITEM_HPP
+#pragma once
 
 #include <string>
 
@@ -21,5 +20,3 @@ public:
 
     virtual void mostrarInfo() const = 0;
 };
-
-#endif

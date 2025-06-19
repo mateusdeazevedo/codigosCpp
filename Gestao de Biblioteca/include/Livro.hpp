@@ -1,5 +1,4 @@
-#ifndef LIVRO_HPP
-#define LIVRO_HPP
+#pragma once
 
 #include "Item.hpp"
 #include <string>
@@ -18,5 +17,3 @@ public:
 
     void mostrarInfo() const override;
 };
-
-#endif
